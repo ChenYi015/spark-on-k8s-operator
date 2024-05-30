@@ -4,10 +4,12 @@ on:
   pull_request:
     branches:
       - master
+      - ack-spark-operator3.0
 
   push:
     branches:
       - master
+      - ack-spark-operator3.0
 
 jobs:
   build-api-docs:
