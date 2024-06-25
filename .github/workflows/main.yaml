@@ -47,7 +47,7 @@ jobs:
 
       - name: build sparkctl
         run: |
-          make all
+          make build-sparkctl
 
   build-spark-operator:
     runs-on: ubuntu-latest
