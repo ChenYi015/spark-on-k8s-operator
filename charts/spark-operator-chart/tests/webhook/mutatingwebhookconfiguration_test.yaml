@@ -24,7 +24,7 @@ release:
   namespace: spark-operator
 
 tests:
-  - it: Should not create the webhook configuration if webhook.enable is false
+  - it: Should not create the mutating webhook configuration if `webhook.enable` is false
     set:
       webhook:
         enable: false
@@ -32,7 +32,7 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: Should create the webhook configuration if webhook.enable is true
+  - it: Should create the mutating webhook configuration if `webhook.enable` is true
     set:
       webhook:
         enable: true
@@ -49,7 +49,7 @@ tests:
         port: 12345
     asserts:
       - equal:
-          path: webhooks[?(@.name == "webhook.sparkoperator.k8s.io")].clientConfig.service.port
+          path: webhooks[*].clientConfig.service.port
           value: 12345
 
   - it: Should use the specified failure policy
@@ -59,20 +59,21 @@ tests:
         failurePolicy: Fail
     asserts:
       - equal:
-          path: webhooks[?(@.name == "webhook.sparkoperator.k8s.io")].failurePolicy
+          path: webhooks[*].failurePolicy
           value: Fail
 
   - it: Should set namespaceSelector if sparkJobNamespaces is not empty
     set:
-      sparkJobNamespaces:
-        - ns1
-        - ns2
-        - ns3
       webhook:
         enable: true
+      spark:
+        jobNamespaces:
+          - ns1
+          - ns2
+          - ns3
     asserts:
       - equal:
-          path: webhooks[?(@.name == "webhook.sparkoperator.k8s.io")].namespaceSelector
+          path: webhooks[*].namespaceSelector
           value:
             matchExpressions:
               - key: kubernetes.io/metadata.name
@@ -89,5 +90,5 @@ tests:
         timeoutSeconds: 5
     asserts:
       - equal:
-          path: webhooks[?(@.name == "webhook.sparkoperator.k8s.io")].timeoutSeconds
+          path: webhooks[*].timeoutSeconds
           value: 5

@@ -24,10 +24,10 @@ release:
   namespace: spark-operator
 
 tests:
-  - it: Should not create webhook deployment by default
+  - it: Should create webhook deployment by default
     asserts:
       - hasDocuments:
-          count: 0
+          count: 1
 
   - it: Should create webhook deployment if `webhook.enable` is true
     set:

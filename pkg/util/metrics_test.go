@@ -29,12 +29,12 @@ func TestPositiveGauge_EmptyLabels(t *testing.T) {
 	gauge := NewPositiveGauge("testGauge", "test-description", []string{})
 	emptyMap := map[string]string{}
 	gauge.Dec(emptyMap)
-	assert.InEpsilon(t, float64(0), fetchGaugeValue(gauge.gaugeMetric, emptyMap), common.Epsilon)
+	assert.Equal(t, float64(0), fetchGaugeValue(gauge.gaugeMetric, emptyMap), common.Epsilon)
 
 	gauge.Inc(emptyMap)
 	assert.InEpsilon(t, float64(1), fetchGaugeValue(gauge.gaugeMetric, emptyMap), common.Epsilon)
 	gauge.Dec(map[string]string{})
-	assert.InEpsilon(t, float64(0), fetchGaugeValue(gauge.gaugeMetric, emptyMap), common.Epsilon)
+	assert.Equal(t, float64(0), fetchGaugeValue(gauge.gaugeMetric, emptyMap), common.Epsilon)
 }
 
 func TestPositiveGauge_WithLabels(t *testing.T) {
@@ -66,5 +66,5 @@ func TestPositiveGauge_WithLabels(t *testing.T) {
 	wg.Wait()
 	assert.InEpsilon(t, float64(5), fetchGaugeValue(gauge.gaugeMetric, app1), common.Epsilon)
 	// Always Positive Gauge.
-	assert.InEpsilon(t, float64(0), fetchGaugeValue(gauge.gaugeMetric, app2), common.Epsilon)
+	assert.Equal(t, float64(0), fetchGaugeValue(gauge.gaugeMetric, app2), common.Epsilon)
 }

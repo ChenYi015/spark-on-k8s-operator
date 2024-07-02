@@ -21,36 +21,36 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 )
 
-// MutatingWebhookConfigurationEventFilter filters events for MutatingWebhookConfiguration.
-type MutatingWebhookConfigurationEventFilter struct {
+// EventFilter filters events for MutatingWebhookConfiguration.
+type EventFilter struct {
 	name string
 }
 
-func NewMutatingWebhookConfigurationEventFilter(name string) *MutatingWebhookConfigurationEventFilter {
-	return &MutatingWebhookConfigurationEventFilter{
+func NewEventFilter(name string) *EventFilter {
+	return &EventFilter{
 		name: name,
 	}
 }
 
 // MutatingWebhookConfigurationEventFilter implements predicate.Predicate.
-var _ predicate.Predicate = &MutatingWebhookConfigurationEventFilter{}
+var _ predicate.Predicate = &EventFilter{}
 
 // Create implements predicate.Predicate.
-func (m *MutatingWebhookConfigurationEventFilter) Create(event.CreateEvent) bool {
+func (m *EventFilter) Create(event.CreateEvent) bool {
 	return true
 }
 
 // Update implements predicate.Predicate.
-func (m *MutatingWebhookConfigurationEventFilter) Update(event.UpdateEvent) bool {
+func (m *EventFilter) Update(event.UpdateEvent) bool {
 	return true
 }
 
 // Delete implements predicate.Predicate.
-func (m *MutatingWebhookConfigurationEventFilter) Delete(event.DeleteEvent) bool {
+func (m *EventFilter) Delete(event.DeleteEvent) bool {
 	return false
 }
 
 // Generic implements predicate.Predicate.
-func (m *MutatingWebhookConfigurationEventFilter) Generic(event.GenericEvent) bool {
+func (m *EventFilter) Generic(event.GenericEvent) bool {
 	return true
 }

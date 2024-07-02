@@ -85,14 +85,14 @@ go-vet: ## Run go vet against code.
 	go vet ./...
 
 .PHONY: unit-test
-unit-test: manifests generate go-fmt go-vet envtest ## Run  unit tests.
+unit-test: manifests generate go-fmt go-vet envtest ## Run unit tests.
 	@echo "Running unit tests..."
 	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(LOCALBIN) -p path)"
 	go test $$(go list ./... | grep -v /e2e) -coverprofile cover.out
 
 # Utilize Kind or modify the e2e tests to load the image locally, enabling compatibility with other vendors.
-.PHONY: e2e-test  # Run the e2e tests against a Kind k8s instance that is spun up.
-e2e-test: envtest kind-create-cluster
+.PHONY: e2e-test
+e2e-test: envtest kind-create-cluster ## Run the e2e tests against a Kind k8s instance that is spun up.
 	@echo "Running e2e tests..."
 	go test ./test/e2e/ -v -ginkgo.v -timeout 30m
 
@@ -156,7 +156,7 @@ build-sparkctl: ## Build sparkctl binary
 	docker run -w $(SPARK_OPERATOR_GOPATH) \
 	-v $$(pwd):$(SPARK_OPERATOR_GOPATH) $(BUILDER) sh -c \
 	"apk add --no-cache bash git && \
-	cd bin/sparkctl && \
+	cd sparkctl && \
 	bash build.sh" || true
 
 .PHONY: install-sparkctl

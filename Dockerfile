@@ -30,6 +30,7 @@ RUN go mod download
 # Copy the go source code
 COPY api/ api/
 COPY cmd/ cmd/
+COPY internal/ internal/
 COPY pkg/ pkg/
 
 # Build

@@ -61,7 +61,7 @@ func (r *Reconciler) SetupWithManager(mgr ctrl.Manager, options controller.Optio
 			&admissionregistrationv1.MutatingWebhookConfiguration{},
 			NewEventHandler(),
 			builder.WithPredicates(
-				NewMutatingWebhookConfigurationEventFilter(r.name),
+				NewEventFilter(r.name),
 			),
 		).
 		WithOptions(options).

@@ -23,7 +23,6 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
@@ -69,28 +68,6 @@ var _ = Describe("SparkApplication Controller", func() {
 
 			By("Deleting the created test SparkApplication")
 			Expect(k8sClient.Delete(ctx, app)).To(Succeed())
-		})
-
-		It("Should submit spark job successfully", func() {
-
-		})
-
-		It("Should update executor state", func() {
-			pod := &corev1.Pod{
-				ObjectMeta: metav1.ObjectMeta{
-					Name:      "executor-pod",
-					Namespace: appNamespace,
-					Labels: map[string]string{
-						"spark-role":                         "executor",
-						"sparkoperator.k8s.io/app-name":      appName,
-						"sparkoperator.k8s.io/launched-by":   "spark-operator",
-						"sparkoperator.k8s.io/submission-id": "123456789",
-					},
-				},
-			}
-			Expect(k8sClient.Create(ctx, pod)).To(Succeed())
-			pod.Status.Phase = corev1.PodFailed
-			Expect(k8sClient.Status().Update(ctx, pod)).To(Succeed())
 		})
 	})
 

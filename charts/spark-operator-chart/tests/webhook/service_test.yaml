@@ -45,6 +45,6 @@ tests:
       - equal:
           path: spec.ports[0]
           value:
-            port: 8080
+            port: 9443
             targetPort: webhook
             name: webhook

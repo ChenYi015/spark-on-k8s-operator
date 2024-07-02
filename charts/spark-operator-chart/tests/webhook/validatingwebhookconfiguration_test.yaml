@@ -24,24 +24,17 @@ release:
   namespace: spark-operator
 
 tests:
-  - it: Should not create the validating webhook configuration by default
-    asserts:
-      - hasDocuments:
-          count: 0
-
-  - it: Should not create the validating webhook configuration with webhook disabled even if `resourceQuotaEnforcement.enable` is true
-    set:
-      resourceQuotaEnforcement:
-        enable: true
-    asserts:
-      - hasDocuments:
-          count: 0
-
-  - it: Should create the validating webhook configuration if `webhook.enable` and `resourceQuotaEnforcement.enable` are both true
+  - it: Should should not create the validating webhook configuration if `webhook.enable` is false
     set:
       webhook:
-        enable: true
-      resourceQuotaEnforcement:
+        enable: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should create the validating webhook configuration if `webhook.enable` is true
+    set:
+      webhook:
         enable: true
     asserts:
       - containsDocument:
@@ -54,11 +47,9 @@ tests:
       webhook:
         enable: true
         port: 12345
-      resourceQuotaEnforcement:
-        enable: true
     asserts:
       - equal:
-          path: webhooks[?(@.name == "quotaenforcer.sparkoperator.k8s.io")].clientConfig.service.port
+          path: webhooks[*].clientConfig.service.port
           value: 12345
 
   - it: Should use the specified failure policy
@@ -66,11 +57,9 @@ tests:
       webhook:
         enable: true
         failurePolicy: Fail
-      resourceQuotaEnforcement:
-        enable: true
     asserts:
       - equal:
-          path: webhooks[?(@.name == "quotaenforcer.sparkoperator.k8s.io")].failurePolicy
+          path: webhooks[*].failurePolicy
           value: Fail
 
   - it: Should set namespaceSelector if `spark.jobNamespaces` is not empty
@@ -81,11 +70,9 @@ tests:
         - ns1
         - ns2
         - ns3
-      resourceQuotaEnforcement:
-        enable: true
     asserts:
       - equal:
-          path: webhooks[?(@.name == "quotaenforcer.sparkoperator.k8s.io")].namespaceSelector
+          path: webhooks[*].namespaceSelector
           value:
             matchExpressions:
               - key: kubernetes.io/metadata.name
@@ -100,9 +87,7 @@ tests:
       webhook:
         enable: true
         timeoutSeconds: 5
-      resourceQuotaEnforcement:
-        enable: true
     asserts:
       - equal:
-          path: webhooks[?(@.name == "quotaenforcer.sparkoperator.k8s.io")].timeoutSeconds
+          path: webhooks[*].timeoutSeconds
           value: 5

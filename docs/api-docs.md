@@ -318,9 +318,9 @@ string
 </tr>
 <tr>
 <td>
-<code>webUIPort</code><br/>
+<code>webUIAddress</code><br/>
 <em>
-int32
+string
 </em>
 </td>
 <td>
@@ -329,9 +329,9 @@ int32
 </tr>
 <tr>
 <td>
-<code>webUIAddress</code><br/>
+<code>webUIPort</code><br/>
 <em>
-string
+int32
 </em>
 </td>
 <td>
@@ -444,7 +444,7 @@ map[string]string
 </td>
 <td>
 <em>(Optional)</em>
-<p>ServiceLables is a map of key,value pairs of labels that might be added to the service object.</p>
+<p>ServiceLabels is a map of key,value pairs of labels that might be added to the service object.</p>
 </td>
 </tr>
 <tr>
@@ -1315,7 +1315,11 @@ int64
 </thead>
 <tbody><tr><td><p>&#34;FailedValidation&#34;</p></td>
 <td></td>
+</tr><tr><td><p>&#34;&#34;</p></td>
+<td></td>
 </tr><tr><td><p>&#34;Scheduled&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;Validating&#34;</p></td>
 <td></td>
 </tr></tbody>
 </table>
@@ -1458,7 +1462,7 @@ ScheduledSparkApplicationStatus
 (<em>Appears on:</em><a href="#sparkoperator.k8s.io/v1beta2.ScheduledSparkApplication">ScheduledSparkApplication</a>)
 </p>
 <div>
-<p>ScheduledSparkApplicationSpec defines the desired state of ScheduledSparkApplication</p>
+<p>ScheduledSparkApplicationSpec defines the desired state of ScheduledSparkApplication.</p>
 </div>
 <table>
 <thead>
@@ -1713,14 +1717,14 @@ SecretType
 </tr>
 </thead>
 <tbody><tr><td><p>&#34;GCPServiceAccount&#34;</p></td>
-<td><p>GCPServiceAccountSecret is for secrets from a GCP service account Json key file that needs
+<td><p>SecretTypeGCPServiceAccount is for secrets from a GCP service account Json key file that needs
 the environment variable GOOGLE_APPLICATION_CREDENTIALS.</p>
 </td>
 </tr><tr><td><p>&#34;Generic&#34;</p></td>
-<td><p>GenericType is for secrets that needs no special handling.</p>
+<td><p>SecretTypeGeneric is for secrets that needs no special handling.</p>
 </td>
 </tr><tr><td><p>&#34;HadoopDelegationToken&#34;</p></td>
-<td><p>HadoopDelegationTokenSecret is for secrets from an Hadoop delegation token that needs the
+<td><p>SecretTypeHadoopDelegationToken is for secrets from an Hadoop delegation token that needs the
 environment variable HADOOP_TOKEN_FILE_LOCATION.</p>
 </td>
 </tr></tbody>
@@ -3249,7 +3253,7 @@ map[string]string
 </td>
 <td>
 <em>(Optional)</em>
-<p>ServiceLables is a map of key,value pairs of labels that might be added to the service object.</p>
+<p>ServiceLabels is a map of key,value pairs of labels that might be added to the service object.</p>
 </td>
 </tr>
 <tr>
